@@ -48,6 +48,9 @@
 
   .illus{margin:18px 0 8px; border-radius:18px; overflow:hidden; background:#e7f0ea; border:1px solid var(--line)}
   .illus svg{display:block; width:100%; height:auto}
+  .photo{margin:18px 0 8px; border-radius:18px; overflow:hidden; background:#e7f0ea; border:1px solid var(--line)}
+  .photo img{display:block; width:100%; height:auto; aspect-ratio:16/9; object-fit:cover}
+  ol.habits .photo{margin:14px 0 2px -62px; border-radius:14px}
 
   .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px 20px; margin:18px 0}
   ol.habits{list-style:none; padding:0; margin:0; counter-reset:h}
@@ -113,32 +116,8 @@
     <h1>Want to Keep Moving Comfortably After 45? Start With These Simple Habits</h1>
     <p class="lead">Stiff knees in the morning. A little creak when you stand up. For many adults over 45, this is a familiar part of getting older, and the good news is that small daily habits can make a real difference in how your joints feel.</p>
 
-    <figure class="illus" aria-hidden="true">
-      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img">
-        <defs>
-          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf1d8"/><stop offset="1" stop-color="#e7f0ea"/></linearGradient>
-        </defs>
-        <rect width="680" height="300" fill="url(#sky)"/>
-        <circle cx="540" cy="92" r="46" fill="#f6c46a" opacity=".9"/>
-        <path d="M0 210 C120 160 220 190 330 170 S540 140 680 180 V300 H0Z" fill="#a9cdb8"/>
-        <path d="M0 240 C140 210 260 250 400 225 S600 210 680 230 V300 H0Z" fill="#6fa58d"/>
-        <path d="M250 300 C300 260 360 250 430 236" stroke="#f3ead3" stroke-width="26" fill="none" stroke-linecap="round"/>
-        <g fill="#2f6f5e"><circle cx="110" cy="178" r="26"/><rect x="106" y="190" width="8" height="40" fill="#5b4632"/>
-        <circle cx="610" cy="196" r="20"/><rect x="607" y="206" width="6" height="30" fill="#5b4632"/></g>
-        <!-- walking figure -->
-        <g stroke="#1f3d37" stroke-width="9" stroke-linecap="round" fill="none">
-          <circle cx="352" cy="96" r="15" fill="#1f3d37" stroke="none"/>
-          <path d="M350 116 L344 168"/>
-          <path d="M348 128 L326 150 M348 128 L372 146"/>
-          <path d="M344 168 L326 210 M344 168 L368 206"/>
-        </g>
-        <!-- joint highlight on knee -->
-        <circle cx="360" cy="188" r="15" fill="none" stroke="#f6c46a" stroke-width="4" opacity=".95"/>
-        <g fill="#1f5f57" font-family="system-ui, sans-serif" font-size="20" font-weight="700">
-          <text x="40" y="60">Move • Stretch • Strengthen</text>
-          <text x="40" y="90" font-weight="500" fill="#3d4a46">small habits, every day</text>
-        </g>
-      </svg>
+    <figure class="photo">
+      <img src="img/hero-couple-morning-walk.jpg" width="1024" height="576" fetchpriority="high" alt="A smiling couple in their sixties walking hand in hand along a tree-lined park path in warm morning sunlight">
     </figure>
   </section>
 
@@ -149,10 +128,16 @@
   <div class="card">
     <ol class="habits">
       <li><span class="ico" aria-hidden="true">🚶</span><strong>Move a little, often.</strong> Gentle walking, swimming, or cycling keeps joints active. Try to stand up and stretch every 30–60 minutes.</li>
-      <li><span class="ico" aria-hidden="true">🌅</span><strong>Stretch in the morning.</strong> 2–3 minutes of slow ankle circles, knee lifts, and shoulder rolls can help you feel less stiff.</li>
-      <li><span class="ico" aria-hidden="true">🪑</span><strong>Strengthen the muscles around your joints.</strong> Simple exercises like chair squats support your knees and hips.</li>
+      <li><span class="ico" aria-hidden="true">🌅</span><strong>Stretch in the morning.</strong> 2–3 minutes of slow ankle circles, knee lifts, and shoulder rolls can help you feel less stiff.
+        <figure class="photo"><img src="img/seated-morning-stretch.jpg" width="1024" height="576" loading="lazy" alt="A smiling gray-haired woman sitting on a wooden chair in a sunny living room, gently stretching one leg out in front of her"></figure>
+      </li>
+      <li><span class="ico" aria-hidden="true">🪑</span><strong>Strengthen the muscles around your joints.</strong> Simple exercises like chair squats support your knees and hips.
+        <figure class="photo"><img src="img/climbing-garden-steps.jpg" width="1024" height="576" loading="lazy" alt="A smiling man in his sixties walking on stone garden steps, one hand resting lightly on a wooden railing"></figure>
+      </li>
       <li><span class="ico" aria-hidden="true">💧</span><strong>Drink enough water.</strong> Hydration matters for your whole body, including the tissues around your joints.</li>
-      <li><span class="ico" aria-hidden="true">🥗</span><strong>Eat colorful, whole foods.</strong> Leafy greens, fatty fish, berries, nuts, and olive oil are part of a balanced, joint-friendly diet.</li>
+      <li><span class="ico" aria-hidden="true">🥗</span><strong>Eat colorful, whole foods.</strong> Leafy greens, fatty fish, berries, nuts, and olive oil are part of a balanced, joint-friendly diet.
+        <figure class="photo"><img src="img/salmon-greens-berries.jpg" width="1024" height="576" loading="lazy" alt="A colorful plate of grilled salmon on leafy greens with cherry tomatoes, avocado and walnuts, with a small bowl of blueberries and raspberries"></figure>
+      </li>
     </ol>
   </div>
   <p class="note">Go slow and gentle, and never push into pain. If something hurts, stop and check with your doctor.</p>
@@ -168,6 +153,7 @@
   </div>
 
   <h2>Quick recap</h2>
+  <figure class="photo"><img src="img/grandparent-playing-catch.jpg" width="1024" height="576" loading="lazy" alt="A laughing grandfather kneeling on the lawn, tossing a ball with his young grandson in a sunny backyard"></figure>
   <p>Move often, stretch gently each morning, build a little strength, stay hydrated, and fill your plate with colorful whole foods. Small habits, done consistently, are a great foundation for staying active as you age.</p>
   <p><a class="btn" href="https://hop.clickbank.net/?affiliate=duyspace&amp;vendor=jointgen&amp;v=quiz&amp;tid=yts" rel="sponsored nofollow">Take the short Joint Pain Type quiz<small>Affiliate link: I earn a commission if you buy</small></a></p>
   <p class="ftc" role="note"><strong>Disclosure:</strong> I earn a commission if you buy. Last updated: October 19, 2026. Official product information is on the company's page. Views are my own, not the company's.</p>
