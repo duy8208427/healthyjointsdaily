@@ -97,6 +97,20 @@
     .card{padding:28px 30px}
   }
   @media (prefers-reduced-motion:no-preference){ .btn{transition:background .15s} }
+  .optin{background:#fff8e7;border:3px solid #e0b84c;border-radius:16px;padding:24px 20px;margin:24px 0}
+  .optin-h{font-size:30px;line-height:1.25;margin:0 0 8px}
+  .optin-sub{font-size:21px;margin:0 0 16px}
+  .optin-form label{display:block;font-size:20px;font-weight:700;margin:12px 0 6px}
+  .optin-form .opt{font-weight:400}
+  .optin-form input[type=text],.optin-form input[type=email]{width:100%;box-sizing:border-box;font-size:20px;min-height:56px;padding:12px 14px;border:2px solid #555;border-radius:10px}
+  .optin-form input:focus{outline:3px solid #1a5fb4;outline-offset:2px}
+  .optin-btn{display:block;width:100%;box-sizing:border-box;margin:18px 0 10px;min-height:60px;padding:16px 20px;font-size:22px;font-weight:700;color:#fff;background:#1d6b3a;border:0;border-radius:12px;cursor:pointer;text-align:center;text-decoration:none}
+  .optin-btn:hover,.optin-btn:focus{background:#145229;color:#fff}
+  .optin-small{font-size:17px;margin:6px 0}
+  .optin-err{color:#a40000;font-size:19px;font-weight:700;margin:8px 0 0}
+  .optin-ok .ok-h{font-size:26px;font-weight:700;color:#145229;margin:0 0 8px}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .hero-h1{font-size:28px}
 </style>
 </head>
 <body>
@@ -113,9 +127,32 @@
 </div>
 
 <main id="main" class="wrap">
+  <section class="optin" aria-labelledby="optin-title">
+    <h1 id="optin-title" class="optin-h">Stiff Knees in the Morning? Try These 7 Gentle Moves</h1>
+    <p class="optin-sub">Free large-print guide. About 5 minutes, mostly seated.</p>
+    <form class="optin-form" action="https://8d3f0c81.sibforms.com/serve/MUIFAHgUIumETzfFDZJv4TXhEeB7S-ANW-JgUIzc8VFPcdWqpQUbWQjdQQyg94lCiWJANpCmTf07_LF1lN_Y136PoD10cCH6NiOCwVqmc36CkFr9HuAelBVWiyUupNEAu-E2VsOysl9c9gSG376UyNdbT9FVLS4Mzv1QBPI4zqvT0GzbedBL3ogV27BlGLMDdClUB7kLMVbYArRbtA==" method="POST" target="brevo_frame" novalidate>
+      <label for="fn">First name <span class="opt">(optional)</span></label>
+      <input id="fn" type="text" name="FIRSTNAME" autocomplete="given-name" maxlength="60">
+      <label for="em">Email address</label>
+      <input id="em" type="email" name="EMAIL" autocomplete="email" required inputmode="email" aria-describedby="err">
+      <p id="err" class="optin-err" role="alert" hidden>Please enter a valid email address, like name@example.com.</p>
+      <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off"></label></div>
+      <input type="hidden" name="locale" value="en">
+      <input type="hidden" name="html_type" value="simple">
+      <button type="submit" class="optin-btn">Send Me the Free Guide</button>
+      <p class="optin-small">No spam. Unsubscribe anytime. See our <a href="privacy.html">Privacy Policy</a>.</p>
+      <p class="optin-small">Educational only, not medical advice. Go gently and stop if anything hurts.</p>
+    </form>
+    <div class="optin-ok" role="status" aria-live="polite" tabindex="-1" hidden>
+      <p class="ok-h">Thank you! Your free guide is ready.</p>
+      <a class="optin-btn" href="/free/7-morning-moves.pdf" target="_blank" rel="noopener" download>📄 Open My Free Guide (PDF)</a>
+      <p class="optin-small">When you're ready, keep scrolling for more simple habits for comfortable joints. 👇</p>
+    </div>
+  </section>
+
   <section class="hero">
     <p class="eyebrow">Free joint comfort guide</p>
-    <h1>Want to Keep Moving Comfortably After 45? Start With These Simple Habits</h1>
+    <h2 class="hero-h1">Want to Keep Moving Comfortably After 45? Start With These Simple Habits</h2>
     <p class="lead">Stiff knees in the morning. A little creak when you stand up. For many adults over 45, this is a familiar part of getting older, and the good news is that small daily habits can make a real difference in how your joints feel.</p>
 
     <figure class="photo">
@@ -174,6 +211,29 @@
   </ul>
   <p class="note">These organizations do not endorse this site or any product mentioned on it.</p>
 
+  <section class="optin" aria-labelledby="optin-title-b">
+    <h2 id="optin-title-b" class="optin-h">Stiff Knees in the Morning? Try These 7 Gentle Moves</h2>
+    <p class="optin-sub">Free large-print guide. About 5 minutes, mostly seated.</p>
+    <form class="optin-form" action="https://8d3f0c81.sibforms.com/serve/MUIFAHgUIumETzfFDZJv4TXhEeB7S-ANW-JgUIzc8VFPcdWqpQUbWQjdQQyg94lCiWJANpCmTf07_LF1lN_Y136PoD10cCH6NiOCwVqmc36CkFr9HuAelBVWiyUupNEAu-E2VsOysl9c9gSG376UyNdbT9FVLS4Mzv1QBPI4zqvT0GzbedBL3ogV27BlGLMDdClUB7kLMVbYArRbtA==" method="POST" target="brevo_frame" novalidate>
+      <label for="fn-b">First name <span class="opt">(optional)</span></label>
+      <input id="fn-b" type="text" name="FIRSTNAME" autocomplete="given-name" maxlength="60">
+      <label for="em-b">Email address</label>
+      <input id="em-b" type="email" name="EMAIL" autocomplete="email" required inputmode="email" aria-describedby="err-b">
+      <p id="err-b" class="optin-err" role="alert" hidden>Please enter a valid email address, like name@example.com.</p>
+      <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off"></label></div>
+      <input type="hidden" name="locale" value="en">
+      <input type="hidden" name="html_type" value="simple">
+      <button type="submit" class="optin-btn">Send Me the Free Guide</button>
+      <p class="optin-small">No spam. Unsubscribe anytime. See our <a href="privacy.html">Privacy Policy</a>.</p>
+      <p class="optin-small">Educational only, not medical advice. Go gently and stop if anything hurts.</p>
+    </form>
+    <div class="optin-ok" role="status" aria-live="polite" tabindex="-1" hidden>
+      <p class="ok-h">Thank you! Your free guide is ready.</p>
+      <a class="optin-btn" href="/free/7-morning-moves.pdf" target="_blank" rel="noopener" download>📄 Open My Free Guide (PDF)</a>
+      <p class="optin-small">When you're ready, keep scrolling for more simple habits for comfortable joints. 👇</p>
+    </div>
+  </section>
+
   <h2 id="contact">Contact</h2>
   <p>Have a question or comment? For now, the best way to reach me is through the <a href="https://www.youtube.com/@HealthyJointsDaily" rel="me">Healthy Joints Daily YouTube channel</a>. You can also read more <a href="about.html">about me and this site</a>.</p>
 
@@ -189,5 +249,16 @@
     <p class="links"><a href="index.html">Home</a> · <a href="about.html">About</a> · <a href="disclosure.html">Affiliate Disclosure</a> · <a href="privacy.html">Privacy Policy</a> · <a href="index.html#contact">Contact</a> · © 2026 Healthy Joints Daily</p>
   </div>
 </footer>
+<iframe name="brevo_frame" title="Sign-up processing" hidden style="display:none" src="about:blank"></iframe>
+<script>
+document.querySelectorAll('.optin-form').forEach(function(f){
+  f.addEventListener('submit',function(e){
+    var em=f.querySelector('input[name=EMAIL]'),err=f.querySelector('.optin-err'),v=em.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){e.preventDefault();err.hidden=false;em.setAttribute('aria-invalid','true');em.focus();return;}
+    err.hidden=true;em.removeAttribute('aria-invalid');em.value=v;
+    setTimeout(function(){document.querySelectorAll('.optin-form').forEach(function(x){x.hidden=true;x.nextElementSibling.hidden=false;});var ok=f.nextElementSibling;ok.focus();},300);
+  });
+});
+</script>
 </body>
 </html>
