@@ -137,6 +137,9 @@
       <input id="em" type="email" name="EMAIL" autocomplete="email" required inputmode="email" aria-describedby="err">
       <p id="err" class="optin-err" role="alert" hidden>Please enter a valid email address, like name@example.com.</p>
       <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off"></label></div>
+      <input type="hidden" name="UTM_SOURCE" value="">
+      <input type="hidden" name="UTM_MEDIUM" value="">
+      <input type="hidden" name="UTM_CONTENT" value="">
       <input type="hidden" name="locale" value="en">
       <input type="hidden" name="html_type" value="simple">
       <button type="submit" class="optin-btn">Send Me the Free Guide</button>
@@ -187,7 +190,7 @@
     <p>Some people like to add a joint supplement to their routine. One option I've been researching is <strong>Joint Genesis™</strong>. The company describes it as a doctor-formulated supplement that combines several joint-supporting nutrients with <strong>Mobilee®</strong>, an ingredient studied for its role in supporting synovial fluid.</p>
     <p>According to the company, it's designed to support mobility, flexibility, a healthy inflammatory response, and joint comfort. It isn't a magic fix, and results vary from person to person.</p>
     <p>If you'd like to learn more and decide for yourself, you can take a short quiz on the company's website. It asks a few simple questions and then shows you the company's own product information:</p>
-    <a class="btn" href="https://hop.clickbank.net/?affiliate=duyspace&amp;vendor=jointgen&amp;v=quiz&amp;tid=yts" rel="sponsored nofollow">👉 Take the 60-second Joint Pain Type quiz<small>Opens the company's quiz page (affiliate link)</small></a>
+    <a class="btn" href="https://hop.clickbank.net/?affiliate=duyspace&amp;vendor=jointgen&amp;v=quiz&amp;tid=bridge" rel="sponsored nofollow">👉 Take the 60-second Joint Pain Type quiz<small>Opens the company's quiz page (affiliate link)</small></a>
     <p class="ftc" role="note"><strong>Disclosure:</strong> I earn a commission if you buy. Last updated: October 19, 2026. Official product information is on the company's page. Views are my own, not the company's.</p>
     <p><strong>Money-back guarantee:</strong> According to the official Joint Genesis™ website, orders are covered by a 180-day money-back guarantee. Please check the official site for the current terms before you order.</p>
     <p><strong>Buy only from the official website.</strong> To make sure you get the genuine product and the company's guarantee, order only through the official Joint Genesis™ website, not from third-party sellers or marketplaces.</p>
@@ -197,7 +200,7 @@
   <h2>Quick recap</h2>
   <figure class="photo"><img src="img/grandparent-playing-catch.jpg" width="1024" height="576" loading="lazy" alt="A laughing grandfather kneeling on the lawn, tossing a ball with his young grandson in a sunny backyard"></figure>
   <p>Move often, stretch gently each morning, build a little strength, stay hydrated, and fill your plate with colorful whole foods. Small habits, done consistently, are a great foundation for staying active as you age.</p>
-  <p><a class="btn" href="https://hop.clickbank.net/?affiliate=duyspace&amp;vendor=jointgen&amp;v=quiz&amp;tid=yts" rel="sponsored nofollow">Take the short Joint Pain Type quiz<small>Affiliate link: I earn a commission if you buy</small></a></p>
+  <p><a class="btn" href="https://hop.clickbank.net/?affiliate=duyspace&amp;vendor=jointgen&amp;v=quiz&amp;tid=bridge" rel="sponsored nofollow">Take the short Joint Pain Type quiz<small>Affiliate link: I earn a commission if you buy</small></a></p>
   <p class="ftc" role="note"><strong>Disclosure:</strong> I earn a commission if you buy. Last updated: October 19, 2026. Official product information is on the company's page. Views are my own, not the company's.</p>
 
   <h2 id="sources">Sources and further reading</h2>
@@ -222,6 +225,9 @@
       <input id="em-b" type="email" name="EMAIL" autocomplete="email" required inputmode="email" aria-describedby="err-b">
       <p id="err-b" class="optin-err" role="alert" hidden>Please enter a valid email address, like name@example.com.</p>
       <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off"></label></div>
+      <input type="hidden" name="UTM_SOURCE" value="">
+      <input type="hidden" name="UTM_MEDIUM" value="">
+      <input type="hidden" name="UTM_CONTENT" value="">
       <input type="hidden" name="locale" value="en">
       <input type="hidden" name="html_type" value="simple">
       <button type="submit" class="optin-btn">Send Me the Free Guide</button>
@@ -262,5 +268,21 @@ document.querySelectorAll('.optin-form').forEach(function(f){
   });
 });
 </script>
+<script>
+/* First-touch UTM tracking: stored only in this browser (localStorage), used to label affiliate clicks (ClickBank tid) and sign-ups. */
+(function(){
+  var K='hjd_utm',d=null,q=new URLSearchParams(location.search),keys=['utm_source','utm_medium','utm_campaign','utm_content'];
+  try{d=JSON.parse(localStorage.getItem(K)||'null');}catch(e){}
+  if(!d&&q.get('utm_source')){d={};keys.forEach(function(k){var v=(q.get(k)||'').slice(0,60);if(v)d[k]=v;});try{localStorage.setItem(K,JSON.stringify(d));}catch(e){}}
+  if(!d)return;
+  var an=function(x){return String(x||'').toLowerCase().replace(/[^a-z0-9]/g,'');};
+  var ab={youtube:'yt',facebook:'fb',instagram:'ig',email:'email',brevo:'email',pinterest:'pin',tiktok:'tt'};
+  var src=an(d.utm_source),tid=('bridge'+(ab[src]||src)).slice(0,24);
+  document.querySelectorAll('a[href*="hop.clickbank.net"]').forEach(function(a){var u=new URL(a.href);u.searchParams.set('tid',tid);a.href=u.toString();});
+  [['UTM_SOURCE','utm_source'],['UTM_MEDIUM','utm_medium'],['UTM_CONTENT','utm_content']].forEach(function(p){document.querySelectorAll('input[name='+p[0]+']').forEach(function(i){i.value=(d[p[1]]||'').slice(0,100);});});
+})();
+</script>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
