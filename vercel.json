@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/s/:code([a-z0-9]{4,24})", "destination": "/?utm_source=youtube&utm_medium=shorts&utm_campaign=hjd_shorts&utm_content=:code", "permanent": false }
+  ]
+}
