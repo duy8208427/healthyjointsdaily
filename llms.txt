@@ -1,0 +1,16 @@
+# Healthy Joints Daily
+
+> Simple, joint-friendly habits for adults 45 and older: gentle movement, everyday nutrition, and practical routines that support joint comfort and mobility.
+
+## Key Pages
+
+- [Home](https://healthyjointsdaily.vercel.app/): Free 7 Gentle Morning Moves guide, joint-friendly habits, and everyday tips for adults over 45
+- [Joint Genesis Review](https://healthyjointsdaily.vercel.app/joint-genesis-review): Honest look at the Joint Genesis supplement label, ingredients, and what independent health sources say
+- [Joint Genesis Ingredients](https://healthyjointsdaily.vercel.app/joint-genesis-ingredients): Each ingredient explained in plain English, with sources and safety notes
+- [About](https://healthyjointsdaily.vercel.app/about): Who runs this site and why
+
+## Important Notes
+
+**Affiliate Disclosure:** This site contains affiliate links. The site owner may earn a commission from purchases made through affiliate links at no extra cost to the visitor. This is an independent affiliate site, not owned by or officially connected with any product creator.
+
+**Medical Disclaimer:** Educational content only, not medical advice. Statements have not been evaluated by the Food and Drug Administration. Products mentioned are not intended to diagnose, treat, cure, or prevent any disease. Always consult a qualified healthcare professional before starting any supplement, diet, or exercise program.
