@@ -521,9 +521,11 @@ document.querySelectorAll('.optin-form').forEach(function(f){
   if(!d&&q.get('utm_source')){d={};keys.forEach(function(k){var v=(q.get(k)||'').slice(0,60);if(v)d[k]=v;});try{localStorage.setItem(K,JSON.stringify(d));}catch(e){}}
   if(!d)return;
   var ab={youtube:'yt',facebook:'fb',instagram:'ig',email:'email',brevo:'email',pinterest:'pin',tiktok:'tt'};
-  var src=an(d.utm_source),c=an(d.utm_content);
-  /* Per-content tid: yt261123a, nl261105...; fallback bridge+source */
-  var tid=(c&&c.length<=24)?c:('bridge'+(ab[src]||src)).slice(0,24);
+  /* tid logic: current-visit utm_content/tid if present, else first-touch content, else fallback */
+  var currTid=an(q.get('tid')).slice(0,24),currCont=an(q.get('utm_content')).slice(0,24);
+  var c=currTid||currCont||an(d.utm_content);
+  var src=an(d.utm_source);
+  var tid=c||('bridge'+(ab[src]||src)).slice(0,24);
   document.querySelectorAll('a[href*="hop.clickbank.net"]').forEach(function(a){var u=new URL(a.href);u.searchParams.set('tid',tid);a.href=u.toString();});
   [['UTM_SOURCE','utm_source'],['UTM_MEDIUM','utm_medium'],['UTM_CONTENT','utm_content']].forEach(function(p){document.querySelectorAll('input[name='+p[0]+']').forEach(function(i){i.value=(d[p[1]]||'').slice(0,100);});});
 })();
