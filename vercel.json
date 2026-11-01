@@ -4,6 +4,9 @@
     { "source": "/s/:code(yt[0-9]{6}[a-z])", "destination": "/?utm_source=youtube&utm_medium=shorts&utm_campaign=hjd_shorts&utm_content=:code", "permanent": false },
     { "source": "/s/:code(pn[0-9]{6}[a-z])", "destination": "/?utm_source=pinterest&utm_medium=pin&utm_campaign=hjd_pinterest&utm_content=:code", "permanent": false },
     { "source": "/s/:code(ig[0-9]{6}[a-z])", "destination": "/?utm_source=instagram&utm_medium=social&utm_campaign=hjd_instagram&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(em[0-9]{6}[a-z])", "destination": "/?utm_source=brevo&utm_medium=email&utm_campaign=hjd_email&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(sr[0-9]{6}[a-z])", "destination": "/?utm_source=hjd_seo&utm_medium=organic&utm_campaign=seo_jg_review&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(si[0-9]{6}[a-z])", "destination": "/?utm_source=hjd_seo&utm_medium=organic&utm_campaign=seo_jg_ingredients&utm_content=:code", "permanent": false },
     { "source": "/s/:rest*", "destination": "/", "permanent": false }
   ]
 }
