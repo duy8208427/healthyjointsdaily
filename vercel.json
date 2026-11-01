@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "redirects": [
     { "source": "/s/:code(pn261112a|pn261121a|pn261126b)", "destination": "/grocery?utm_source=pinterest&utm_medium=pin&utm_campaign=hjd_pinterest&utm_content=:code", "permanent": false },
     { "source": "/s/:code(yt[0-9]{6}[a-z])", "destination": "/?utm_source=youtube&utm_medium=shorts&utm_campaign=hjd_shorts&utm_content=:code", "permanent": false },
