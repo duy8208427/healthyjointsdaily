@@ -1,0 +1,10 @@
+# Test scripts
+test-*.js
+
+# Development files
+package.json
+package-lock.json
+node_modules
+
+# Documentation
+TEAM_TRACKING_SUMMARY.md
