@@ -1,0 +1,9 @@
+{
+  "name": "healthyjointsdaily",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test scripts/test-tid.js scripts/test-track.js && node scripts/check-html-tid.js",
+    "check:html": "node scripts/check-html-tid.js"
+  }
+}
