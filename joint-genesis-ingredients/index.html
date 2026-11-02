@@ -736,34 +736,8 @@ document.querySelectorAll('.optin-form').forEach(function(f){
   });
 });
 </script>
-<script>
-/* First-touch UTM tracking: stored only in this browser (localStorage), used to label affiliate clicks (ClickBank tid) and sign-ups. */
-(function(){
-  var K='hjd_utm',KT='hjd_team',d=null,q=new URLSearchParams(location.search),keys=['utm_source','utm_medium','utm_campaign','utm_content'];
-  try{d=JSON.parse(localStorage.getItem(K)||'null');}catch(e){}
-  var an=function(x){return String(x||'').toLowerCase().replace(/[^a-z0-9]/g,'');};
-  var sc=an(q.get('s')).slice(0,24);if(!d&&sc&&!q.get('utm_source')){q.set('utm_source','youtube');q.set('utm_medium','shorts');q.set('utm_campaign','hjd_shorts');q.set('utm_content',sc);}
-  if(!d&&q.get('utm_source')){d={};keys.forEach(function(k){var v=(q.get(k)||'').slice(0,60);if(v)d[k]=v;});try{localStorage.setItem(K,JSON.stringify(d));}catch(e){}}
-  /* Team flag handling: ?tid=teamtest sets team mode, ?hjdteam=off clears it */
-  var currTid=an(q.get('tid')).slice(0,24);
-  if(currTid==='teamtest'){try{localStorage.setItem(KT,'1');}catch(e){}}
-  if(q.get('hjdteam')==='off'){try{localStorage.removeItem(KT);}catch(e){}}
-  var teamMode=false;try{teamMode=(localStorage.getItem(KT)==='1');}catch(e){}
-  /* Team mode overrides all ClickBank tid logic */
-  if(teamMode){
-    document.querySelectorAll('a[href*="hop.clickbank.net"]').forEach(function(a){var u=new URL(a.href);u.searchParams.set('tid','teamtest');a.href=u.toString();});
-    [['UTM_SOURCE','team'],['UTM_MEDIUM','test'],['UTM_CONTENT','teamtest']].forEach(function(p){document.querySelectorAll('input[name='+p[0]+']').forEach(function(i){i.value=p[1];});});
-    return;
-  }
-  if(!d)return;
-  var ab={youtube:'yt',facebook:'fb',instagram:'ig',email:'email',brevo:'email',pinterest:'pin',tiktok:'tt'};
-  var src=an(d.utm_source),c=an(d.utm_content);
-  /* Per-content tid: yt261123a, nl261105...; fallback bridge+source */
-  var tid=(c&&c.length<=24)?c:('bridge'+(ab[src]||src)).slice(0,24);
-  document.querySelectorAll('a[href*="hop.clickbank.net"]').forEach(function(a){var u=new URL(a.href);u.searchParams.set('tid',tid);a.href=u.toString();});
-  [['UTM_SOURCE','utm_source'],['UTM_MEDIUM','utm_medium'],['UTM_CONTENT','utm_content']].forEach(function(p){document.querySelectorAll('input[name='+p[0]+']').forEach(function(i){i.value=(d[p[1]]||'').slice(0,100);});});
-})();
-</script>
+<script src="/js/tid.js"></script>
+<script src="/js/track.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

@@ -5,6 +5,8 @@ test-*.js
 package.json
 package-lock.json
 node_modules
+dist/
+scripts/
 
 # Documentation
 TEAM_TRACKING_SUMMARY.md

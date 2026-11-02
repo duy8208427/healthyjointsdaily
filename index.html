@@ -671,7 +671,7 @@
     <p>If you&rsquo;ve gone through the questions above and want to look at a supplement to go with your morning routine, one option I've been researching is <strong>Joint Genesis™</strong>. The company describes it as a doctor-formulated supplement that combines several joint-supporting nutrients with <strong>Mobilee®</strong>, an ingredient studied for its role in supporting synovial fluid.</p>
     <p>According to the company, it's designed to support mobility, flexibility, a healthy inflammatory response, and joint comfort. It isn't a magic fix, and results vary from person to person.</p>
     <p>If you'd like to learn more and decide for yourself, you can take a short quiz on the company's website. It asks a few simple questions and then shows you the company's own product information:</p>
-    <a class="btn" href="https://hop.clickbank.net/?affiliate=duyspace&amp;vendor=jointgen&amp;v=quiz&amp;tid=bridge" rel="sponsored nofollow">👉 Take the 60-second Joint Pain Type quiz<small>Opens the company's quiz page (affiliate link)</small></a>
+    <a class="btn" href="https://72c658wr0hc2uu35weylo2xt65.hop.clickbank.net/?tid=web" rel="sponsored nofollow">👉 Take the 60-second Joint Pain Type quiz<small>Opens the company's quiz page (affiliate link)</small></a>
     <p class="ftc" role="note"><strong>Disclosure:</strong> I earn a commission if you buy. Last updated: November 1, 2026. Official product information is on the company's page. Views are my own, not the company's.</p>
     <p><strong>Buy only from the official website.</strong> To make sure you get the genuine product and the company's guarantee, order only through the official Joint Genesis™ website, not from third-party sellers or marketplaces.</p>
     <p class="note">Always talk to your doctor before starting any new supplement, especially if you take medication or have a medical condition.</p>
@@ -685,7 +685,7 @@
   <h2>Quick recap</h2>
   <figure class="photo"><img src="img/grandparent-playing-catch.jpg" width="1024" height="576" loading="lazy" alt="A laughing grandfather kneeling on the lawn, tossing a ball with his young grandson in a sunny backyard"></figure>
   <p>Move often, stretch gently each morning, build a little strength, stay hydrated, and fill your plate with colorful whole foods. Small habits, done consistently, are a great foundation for staying active as you age.</p>
-  <p><a class="btn" href="https://hop.clickbank.net/?affiliate=duyspace&amp;vendor=jointgen&amp;v=quiz&amp;tid=bridge" rel="sponsored nofollow">Take the short Joint Pain Type quiz<small>Affiliate link: I earn a commission if you buy</small></a></p>
+  <p><a class="btn" href="https://72c658wr0hc2uu35weylo2xt65.hop.clickbank.net/?tid=web" rel="sponsored nofollow">Take the short Joint Pain Type quiz<small>Affiliate link: I earn a commission if you buy</small></a></p>
   <p class="ftc" role="note"><strong>Disclosure:</strong> I earn a commission if you buy. Last updated: November 1, 2026. Official product information is on the company's page. Views are my own, not the company's.</p>
 
   <h2 id="sources">Sources and further reading</h2>
@@ -753,36 +753,8 @@ document.querySelectorAll('.optin-form').forEach(function(f){
   });
 });
 </script>
-<script>
-/* First-touch UTM tracking: stored only in this browser (localStorage), used to label affiliate clicks (ClickBank tid) and sign-ups. */
-(function(){
-  var K='hjd_utm',KT='hjd_team',d=null,q=new URLSearchParams(location.search),keys=['utm_source','utm_medium','utm_campaign','utm_content'];
-  try{d=JSON.parse(localStorage.getItem(K)||'null');}catch(e){}
-  var an=function(x){return String(x||'').toLowerCase().replace(/[^a-z0-9]/g,'');};
-  var sc=an(q.get('s')).slice(0,24);if(!d&&sc&&!q.get('utm_source')){q.set('utm_source','youtube');q.set('utm_medium','shorts');q.set('utm_campaign','hjd_shorts');q.set('utm_content',sc);}
-  if(!d&&q.get('utm_source')){d={};keys.forEach(function(k){var v=(q.get(k)||'').slice(0,60);if(v)d[k]=v;});try{localStorage.setItem(K,JSON.stringify(d));}catch(e){}}
-  /* Team flag handling: ?tid=teamtest sets team mode, ?hjdteam=off clears it */
-  var currTid=an(q.get('tid')).slice(0,24);
-  if(currTid==='teamtest'){try{localStorage.setItem(KT,'1');}catch(e){}}
-  if(q.get('hjdteam')==='off'){try{localStorage.removeItem(KT);}catch(e){}}
-  var teamMode=false;try{teamMode=(localStorage.getItem(KT)==='1');}catch(e){}
-  /* Team mode overrides all ClickBank tid logic */
-  if(teamMode){
-    document.querySelectorAll('a[href*="hop.clickbank.net"]').forEach(function(a){var u=new URL(a.href);u.searchParams.set('tid','teamtest');a.href=u.toString();});
-    [['UTM_SOURCE','team'],['UTM_MEDIUM','test'],['UTM_CONTENT','teamtest']].forEach(function(p){document.querySelectorAll('input[name='+p[0]+']').forEach(function(i){i.value=p[1];});});
-    return;
-  }
-  if(!d)return;
-  var ab={youtube:'yt',facebook:'fb',instagram:'ig',email:'email',brevo:'email',pinterest:'pin',tiktok:'tt'};
-  /* tid logic: current-visit utm_content/tid if present, else first-touch content, else fallback */
-  var currCont=an(q.get('utm_content')).slice(0,24);
-  var c=currTid||currCont||an(d.utm_content);
-  var src=an(d.utm_source);
-  var tid=c||('bridge'+(ab[src]||src)).slice(0,24);
-  document.querySelectorAll('a[href*="hop.clickbank.net"]').forEach(function(a){var u=new URL(a.href);u.searchParams.set('tid',tid);a.href=u.toString();});
-  [['UTM_SOURCE','utm_source'],['UTM_MEDIUM','utm_medium'],['UTM_CONTENT','utm_content']].forEach(function(p){document.querySelectorAll('input[name='+p[0]+']').forEach(function(i){i.value=(d[p[1]]||'').slice(0,100);});});
-})();
-</script>
+<script src="/js/tid.js"></script>
+<script src="/js/track.js"></script>
 <script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments);};</script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>

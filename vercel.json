@@ -11,6 +11,11 @@
     { "source": "/s/:code(em[0-9]{6}[a-z])", "destination": "/?utm_source=brevo&utm_medium=email&utm_campaign=hjd_email&utm_content=:code", "permanent": false },
     { "source": "/s/:code(sr[0-9]{6}[a-z])", "destination": "/?utm_source=hjd_seo&utm_medium=organic&utm_campaign=seo_jg_review&utm_content=:code", "permanent": false },
     { "source": "/s/:code(si[0-9]{6}[a-z])", "destination": "/?utm_source=hjd_seo&utm_medium=organic&utm_campaign=seo_jg_ingredients&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(tt[0-9]{6}[a-z])", "destination": "/?utm_source=tiktok&utm_medium=social&utm_campaign=hjd_tiktok&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(fb[0-9]{6}[a-z])", "destination": "/?utm_source=facebook&utm_medium=social&utm_campaign=hjd_facebook&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(rd[0-9]{6}[a-z])", "destination": "/?utm_source=reddit&utm_medium=social&utm_campaign=hjd_reddit&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(qr[0-9]{6}[a-z])", "destination": "/?utm_source=quora&utm_medium=social&utm_campaign=hjd_quora&utm_content=:code", "permanent": false },
+    { "source": "/s/:code(qa[0-9]{6}[a-z])", "destination": "/?utm_source=quora&utm_medium=social&utm_campaign=hjd_quora&utm_content=:code", "permanent": false },
     { "source": "/s/:rest*", "destination": "/", "permanent": false }
   ]
 }
