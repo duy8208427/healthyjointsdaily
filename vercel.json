@@ -16,6 +16,20 @@
     { "source": "/s/:code(rd[0-9]{6}[a-z])", "destination": "/?utm_source=reddit&utm_medium=social&utm_campaign=hjd_reddit&utm_content=:code", "permanent": false },
     { "source": "/s/:code(qr[0-9]{6}[a-z])", "destination": "/?utm_source=quora&utm_medium=social&utm_campaign=hjd_quora&utm_content=:code", "permanent": false },
     { "source": "/s/:code(qa[0-9]{6}[a-z])", "destination": "/?utm_source=quora&utm_medium=social&utm_campaign=hjd_quora&utm_content=:code", "permanent": false },
+    { "source": "/tt", "destination": "/?src=tiktok", "permanent": true },
+    { "source": "/tt/", "destination": "/?src=tiktok", "permanent": true },
+    { "source": "/yt", "destination": "/?src=youtube", "permanent": true },
+    { "source": "/yt/", "destination": "/?src=youtube", "permanent": true },
+    { "source": "/fb", "destination": "/?src=facebook", "permanent": true },
+    { "source": "/fb/", "destination": "/?src=facebook", "permanent": true },
+    { "source": "/ig", "destination": "/?src=instagram", "permanent": true },
+    { "source": "/ig/", "destination": "/?src=instagram", "permanent": true },
+    { "source": "/pin", "destination": "/?src=pinterest", "permanent": true },
+    { "source": "/pin/", "destination": "/?src=pinterest", "permanent": true },
+    { "source": "/rd", "destination": "/?src=reddit", "permanent": true },
+    { "source": "/rd/", "destination": "/?src=reddit", "permanent": true },
+    { "source": "/qr", "destination": "/?src=quora", "permanent": true },
+    { "source": "/qr/", "destination": "/?src=quora", "permanent": true },
     { "source": "/s/:rest*", "destination": "/", "permanent": false }
   ]
 }
