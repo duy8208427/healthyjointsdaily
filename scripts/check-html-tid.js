@@ -1,5 +1,6 @@
 /* Scan built HTML. Every ClickBank hop link must carry a valid tid.
-   Hop links are allowed only on the bridge page (dist/index.html). */
+   Hop links are allowed on the bridge (dist/index.html) and the grocery
+   page (dist/grocery/index.html). The no-JS default tid is web. */
 var fs = require('fs');
 var path = require('path');
 
@@ -31,7 +32,8 @@ if (!files.length) {
 files.forEach(function (file) {
   var html = fs.readFileSync(file, 'utf8');
   var rel = path.relative(dist, file).split(path.sep).join('/');
-  var isBridge = rel === 'index.html';
+  var hopPages = { 'index.html': 1, 'grocery/index.html': 1 };
+  var allowsHop = !!hopPages[rel];
   if (html.indexOf('/js/tid.js') === -1 || html.indexOf('/js/track.js') === -1) {
     failures.push(rel + ': missing /js/tid.js or /js/track.js');
   }
@@ -44,8 +46,8 @@ files.forEach(function (file) {
       failures.push(rel + ': unparseable ClickBank href ' + raw);
       continue;
     }
-    if (!isBridge) {
-      failures.push(rel + ': ClickBank hop link is outside the bridge page: ' + raw);
+    if (!allowsHop) {
+      failures.push(rel + ': ClickBank hop link is outside the bridge and grocery pages: ' + raw);
     }
     if (url.hostname !== HOP_HOST) {
       failures.push(rel + ': hop host is ' + url.hostname + ', expected ' + HOP_HOST);
@@ -55,19 +57,24 @@ files.forEach(function (file) {
       failures.push(rel + ': ClickBank link has no tid: ' + raw);
     } else if (!/^[a-z0-9]{1,24}$/.test(tid)) {
       failures.push(rel + ': tid is missing or not alphanumeric 1-24: ' + JSON.stringify(tid));
-    } else if (isBridge && tid !== 'web') {
+    } else if (allowsHop && tid !== 'web') {
       failures.push(rel + ': no-JS default tid must be web, found ' + tid);
     }
   }
 });
 
-var bridge = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
-var hops = bridge.match(/href\s*=\s*["'][^"']*hop\.clickbank\.net[^"']*["']/gi) || [];
-if (hops.length < 1) failures.push('index.html: bridge page has no ClickBank hop link');
+function hopCount(rel) {
+  var html = fs.readFileSync(path.join(dist, rel), 'utf8');
+  return (html.match(/href\s*=\s*["'][^"']*hop\.clickbank\.net[^"']*["']/gi) || []).length;
+}
+var bridgeHops = hopCount('index.html');
+var groceryHops = hopCount('grocery/index.html');
+if (bridgeHops < 1) failures.push('index.html: bridge page has no ClickBank hop link');
+if (groceryHops < 1) failures.push('grocery/index.html: grocery page has no ClickBank hop link');
 
 if (failures.length) {
   console.error('ClickBank tid check failed:\n- ' + failures.join('\n- '));
   process.exit(1);
 }
 
-console.log('html tid check ok: ' + files.length + ' pages, ' + hops.length + ' bridge hop link(s), each with tid=web');
+console.log('html tid check ok: ' + files.length + ' pages, ' + bridgeHops + ' bridge hop link(s), ' + groceryHops + ' grocery hop link(s), each with tid=web');
