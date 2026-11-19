@@ -5,7 +5,8 @@ var path = require('path');
 var api = require('../js/tid.js');
 
 var NETWORKS = ['pinterest', 'tiktok', 'youtube', 'facebook', 'instagram', 'reddit', 'quora', 'web'];
-var ALLOWED = NETWORKS.concat(['yts', 'bridge', 'teamtest']);
+var CHANNELS = ['yt', 'pin', 'fb', 'email'];
+var ALLOWED = NETWORKS.concat(CHANNELS, ['yts', 'bridge', 'teamtest']);
 
 function assertTid(actual, expected) {
   assert.equal(actual, expected);
@@ -26,11 +27,9 @@ test('each network maps to its exact tid, not the post code', function () {
   assertTid(api.deriveTid({ utm_source: 'youtube', utm_content: 'yt261102a' }), 'youtube');
   assertTid(api.deriveTid({ utm_source: 'YouTube' }), 'youtube');
   assertTid(api.deriveTid({ s: 'yt261102a' }), 'youtube');
-  assertTid(api.deriveTid({ src: 'yt' }), 'youtube');
 
   assertTid(api.deriveTid({ utm_source: 'facebook', utm_content: 'fb261102a' }), 'facebook');
   assertTid(api.deriveTid({ s: 'fb261102a' }), 'facebook');
-  assertTid(api.deriveTid({ src: 'fb' }), 'facebook');
 
   assertTid(api.deriveTid({ utm_source: 'instagram', utm_content: 'ig261102a' }), 'instagram');
   assertTid(api.deriveTid({ s: 'ig261102a' }), 'instagram');
@@ -162,6 +161,74 @@ test('in-site links copy src, and yts or bridge is kept on those links', functio
   assert.equal(api.persistedSrc(null), '');
   assert.equal(api.legacyQueryTid({ tid: 'yts' }, { utm_source: 'youtube' }), 'yts');
   assert.equal(api.legacyQueryTid({}, { tid: 'bridge', utm_source: 'pinterest' }), 'bridge');
+});
+
+test('bridge ?src= is an exact yt pin fb email whitelist', function () {
+  CHANNELS.forEach(function (src) {
+    assert.equal(api.channelFromSrc(src), src);
+    assert.equal(api.channelFromSrc(src.toUpperCase()), src);
+    assert.equal(api.channelFromSrc('  ' + src + '  '), src);
+    assertTid(api.deriveTid({ src: src }), src);
+    assertTid(api.resolveOutboundTid({ src: src }, null, false), src);
+    assert.equal(api.hopUrl(src), api.HOP_BASE + '?tid=' + src);
+    var touch = api.buildTouch({ src: src });
+    assertTid(api.deriveTid(touch), src);
+    assert.equal(api.persistedSrc(touch), src);
+  });
+
+  assert.equal(api.channelFromSrc('youtube'), '');
+  assertTid(api.deriveTid({ src: 'youtube' }), 'youtube');
+  assertTid(api.deriveTid({ src: 'pinterest' }), 'pinterest');
+  assertTid(api.deriveTid({ src: 'facebook' }), 'facebook');
+  assertTid(api.deriveTid({ src: 'yt', utm_source: 'pinterest' }), 'yt');
+  assertTid(api.deriveTid({}), 'web');
+  assertTid(api.deriveTid({ src: '' }), 'web');
+  assertTid(api.deriveTid({ src: 'yt extra' }), 'web');
+  assertTid(api.deriveTid({ src: 'emailer' }), 'web');
+  assertTid(api.deriveTid({ src: 'fb;drop table' }), 'web');
+  assertTid(api.deriveTid({ src: 'yt<script>alert(1)</script>' }), 'web');
+  assertTid(api.deriveTid({ src: 'pin\nfb' }), 'web');
+  assertTid(api.deriveTid({ src: 'yt', tid: '"><img src=x>' }), 'yt');
+  assert.equal(api.resolveOutboundTid({ src: 'email', tid: 'pwned' }, null, false), 'email');
+  assert.equal(api.resolveOutboundTid({ src: 'yt', tid: 'yts' }, null, false), 'yts');
+  assert.equal(api.resolveOutboundTid({ src: 'pin', tid: 'teamtest' }, null, false), 'teamtest');
+  assert.equal(api.hopUrl('not-a-tid'), api.hopUrl('web'));
+  assert.equal(api.hopUrl('yt<script>'), api.hopUrl('web'));
+  assert.equal(api.persistedSrc({ src: 'yt<script>' }), 'web');
+
+  var preserved = api.HOP_BASE + '?cbpage=tsl&tid=web&hop=duyspace';
+  var next = new URL(api.withTid(preserved, 'pin'));
+  assert.equal(next.searchParams.get('tid'), 'pin');
+  assert.equal(next.searchParams.get('cbpage'), 'tsl');
+  assert.equal(next.searchParams.get('hop'), 'duyspace');
+  assert.equal(next.hostname, '72c658wr0hc2uu35weylo2xt65.hop.clickbank.net');
+  var blocked = new URL(api.withTid(preserved, 'pin&tid=admin'));
+  assert.equal(blocked.searchParams.get('tid'), 'web');
+  assert.equal(blocked.searchParams.get('hop'), 'duyspace');
+  assert.equal(blocked.searchParams.get('cbpage'), 'tsl');
+
+  var page = 'https://healthyjointsdaily.vercel.app/joint-genesis-review';
+  assert.equal(api.decorateInternalHref('/', page, 'yt', ''), '/?src=yt');
+  assert.equal(api.decorateInternalHref('/#joint-genesis', page, 'pin', ''), '/?src=pin#joint-genesis');
+  assert.equal(api.decorateInternalHref('/#signup', page, 'fb', ''), '/?src=fb#signup');
+  assert.equal(api.decorateInternalHref('/#contact', page, 'email', ''), '/?src=email#contact');
+  assert.equal(api.decorateInternalHref('/free/7-morning-moves.pdf', page, 'email', ''), '/free/7-morning-moves.pdf');
+});
+
+test('the bridge PDF form sits above the first Joint Genesis button', function () {
+  var html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  var formAt = html.indexOf('id="signup"');
+  var ctaAt = html.indexOf('>See Joint Genesis on the official site');
+  var disclosure = '<strong>Disclosure:</strong> I earn a commission if you buy. The next page is the company\'s own video presentation, not a short quiz. These statements have not been evaluated by the Food and Drug Administration.';
+  var disclosureAt = html.indexOf(disclosure);
+  assert.ok(formAt > 0 && ctaAt > formAt);
+  assert.ok(disclosureAt > ctaAt && disclosureAt - ctaAt < 500);
+  assert.equal((html.match(/id="signup"/g) || []).length, 1);
+  assert.equal((html.match(/class="optin-form"/g) || []).length, 2);
+  var actions = html.match(/<form class="optin-form" action="([^"]+)"/g);
+  assert.equal(actions.length, 2);
+  assert.equal(actions[0], actions[1]);
+  assert.match(actions[0], /sibforms\.com/);
 });
 
 test('HopLink base is the encrypted id and the tid query is clean', function () {

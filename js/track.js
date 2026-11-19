@@ -1,6 +1,7 @@
 /* First-touch source for this visit: sessionStorage, with localStorage as a
    fallback, and ?src= copied onto in-site links. The bridge href already has
-   tid=web, so a click with JavaScript off stays tagged. */
+   tid=web, so a click with JavaScript off stays tagged.
+   ?src=yt|pin|fb|email rewrites tid on every HopLink. Other hop params stay. */
 (function () {
   if (typeof document === 'undefined' || !window.HjdTid) return;
   var api = window.HjdTid;
@@ -59,9 +60,7 @@
 
   document.querySelectorAll('a[href*="hop.clickbank.net"]').forEach(function (a) {
     try {
-      var hop = new URL(a.href, location.href);
-      hop.searchParams.set('tid', tid);
-      a.href = hop.toString();
+      a.href = api.withTid(a.href, tid, location.href);
     } catch (e) {}
   });
 
