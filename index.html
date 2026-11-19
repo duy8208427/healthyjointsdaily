@@ -110,8 +110,7 @@
   .hero{padding:48px 0 24px}
   .hero-intro{padding:48px 0 24px}
   .hero-grid{display:block}
-  .hero-content{}
-  .hero-form-col{}
+  .hero-form-col .optin{margin:12px 0 8px}
   .hero-visual{
     margin:28px 0;
     background:linear-gradient(135deg, #f9f3e6 0%, #f4ead4 100%);
@@ -547,9 +546,19 @@
     .hero-grid{
       display:grid;
       grid-template-columns:1fr 460px;
-      gap:64px;
+      grid-template-areas:
+        "copy form"
+        "cta form"
+        "rest form";
+      column-gap:64px;
+      row-gap:12px;
       align-items:start;
     }
+    .hero-copy{grid-area:copy}
+    .hero-form-col{grid-area:form; min-width:0}
+    .hero-grid > .early-cta{grid-area:cta}
+    .hero-rest{grid-area:rest; min-width:0}
+    .hero-form-col .optin{margin:0}
     
     .hero-visual{
       margin:0 0 24px;
@@ -618,30 +627,11 @@
 <main id="main" class="wrap">
   <section class="hero">
     <div class="hero-grid">
-      <div class="hero-content">
+      <div class="hero-copy">
         <p class="eyebrow">Free joint comfort guide</p>
         <h1>Stiff Knees in the Morning? Try These 7 Gentle Moves</h1>
         <p class="lead">Free large-print guide. About 5 minutes, mostly seated.</p>
-        <aside class="early-cta" aria-label="Supplement option">
-          <p class="early-cta-kicker">Looking for a supplement option?</p>
-          <a class="btn" href="https://72c658wr0hc2uu35weylo2xt65.hop.clickbank.net/?tid=web" rel="sponsored nofollow">See Joint Genesis on the official site<small>Opens the company's video page (affiliate link)</small></a>
-          <p class="ftc" role="note"><strong>Disclosure:</strong> I earn a commission if you buy. The next page is the company's own video presentation, not a short quiz. These statements have not been evaluated by the Food and Drug Administration.</p>
-        </aside>
-
-        <div class="hero-visual">
-          <span class="hero-visual-icon" aria-hidden="true">📋</span>
-          <h3>7 Gentle Morning Moves</h3>
-          <p>Large-print guide for joint comfort and mobility</p>
-        </div>
-        
-        <ul class="hero-benefits">
-          <li>Simple movements you can do mostly seated</li>
-          <li>About 5 minutes each morning</li>
-          <li>Designed for adults over 45</li>
-          <li>No equipment needed</li>
-        </ul>
       </div>
-      
       <div class="hero-form-col">
         <section id="signup" class="optin" aria-labelledby="optin-title">
           <h2 id="optin-title" class="optin-h">Get Your Free Guide</h2>
@@ -669,6 +659,24 @@
             <p class="optin-small">The PDF opens because you signed up. The button above is an affiliate link. I earn a commission if you buy.</p>
           </div>
         </section>
+      </div>
+      <aside class="early-cta" aria-label="Supplement option">
+        <p class="early-cta-kicker">Looking for a supplement option?</p>
+        <a class="btn" href="https://72c658wr0hc2uu35weylo2xt65.hop.clickbank.net/?tid=web" rel="sponsored nofollow">See Joint Genesis on the official site<small>Opens the company's video page (affiliate link)</small></a>
+        <p class="ftc" role="note"><strong>Disclosure:</strong> I earn a commission if you buy. The next page is the company's own video presentation, not a short quiz. These statements have not been evaluated by the Food and Drug Administration.</p>
+      </aside>
+      <div class="hero-rest">
+        <div class="hero-visual">
+          <span class="hero-visual-icon" aria-hidden="true">📋</span>
+          <h3>7 Gentle Morning Moves</h3>
+          <p>Large-print guide for joint comfort and mobility</p>
+        </div>
+        <ul class="hero-benefits">
+          <li>Simple movements you can do mostly seated</li>
+          <li>About 5 minutes each morning</li>
+          <li>Designed for adults over 45</li>
+          <li>No equipment needed</li>
+        </ul>
       </div>
     </div>
   </section>

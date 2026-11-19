@@ -200,6 +200,87 @@ test('?src= on any page is case-insensitive, sticks, and is copied onto in-site 
   assert.equal(tidOf(unknown.links[0]), 'web');
 });
 
+test('?src=yt pin fb email sets that tid on every hop link and keeps it on bridge links', function () {
+  var session = memoryStore();
+  var local = memoryStore();
+  var extra = 'https://72c658wr0hc2uu35weylo2xt65.hop.clickbank.net/?tid=web&cbpage=tsl&hop=duyspace';
+  var page = runPage({
+    search: '?src=yt',
+    session: session,
+    local: local,
+    hrefs: [HOP, extra, HOP],
+    anchors: [
+      { href: '/' },
+      { href: '/#joint-genesis' },
+      { href: '/#signup' },
+      { href: '/about' },
+      { href: '/free/7-morning-moves.pdf' }
+    ]
+  });
+  page.links.forEach(function (link) {
+    assert.equal(tidOf(link), 'yt');
+    assert.equal(link.href.indexOf('<'), -1);
+  });
+  var kept = new URL(page.links[1].href);
+  assert.equal(kept.searchParams.get('tid'), 'yt');
+  assert.equal(kept.searchParams.get('cbpage'), 'tsl');
+  assert.equal(kept.searchParams.get('hop'), 'duyspace');
+  assert.equal(kept.hostname, '72c658wr0hc2uu35weylo2xt65.hop.clickbank.net');
+  assert.equal(page.anchors[0].href, '/?src=yt');
+  assert.equal(page.anchors[1].href, '/?src=yt#joint-genesis');
+  assert.equal(page.anchors[2].href, '/?src=yt#signup');
+  assert.equal(page.anchors[3].href, '/about?src=yt');
+  assert.equal(page.anchors[4].href, '/free/7-morning-moves.pdf');
+
+  var later = runPage({
+    search: '',
+    session: session,
+    local: local,
+    anchors: [{ href: '/#joint-genesis' }]
+  });
+  assert.equal(tidOf(later.links[0]), 'yt');
+  assert.equal(later.anchors[0].href, '/?src=yt#joint-genesis');
+
+  ['pin', 'fb', 'email'].forEach(function (src) {
+    var next = runPage({
+      search: '?src=' + encodeURIComponent(src.toUpperCase()),
+      session: memoryStore(),
+      local: memoryStore(),
+      anchors: [{ href: '/' }, { href: '/#signup' }]
+    });
+    assert.equal(tidOf(next.links[0]), src);
+    assert.equal(next.anchors[0].href, '/?src=' + src);
+    assert.equal(next.anchors[1].href, '/?src=' + src + '#signup');
+  });
+
+  var spaced = runPage({
+    search: '?src=' + encodeURIComponent('  email  '),
+    session: memoryStore(),
+    local: memoryStore()
+  });
+  assert.equal(tidOf(spaced.links[0]), 'email');
+
+  var junk = runPage({
+    search: '?src=' + encodeURIComponent('yt"><script>alert(1)</script>') + '&tid=' + encodeURIComponent('"><img'),
+    session: memoryStore(),
+    local: memoryStore(),
+    hrefs: [extra],
+    anchors: [{ href: '/' }, { href: '/#joint-genesis' }]
+  });
+  assert.equal(tidOf(junk.links[0]), 'web');
+  assert.equal(junk.links[0].href.indexOf('<'), -1);
+  assert.equal(junk.links[0].href.indexOf('script'), -1);
+  assert.equal(junk.links[0].href.indexOf('img'), -1);
+  assert.equal(new URL(junk.links[0].href).searchParams.get('hop'), 'duyspace');
+  assert.equal(new URL(junk.links[0].href).searchParams.get('cbpage'), 'tsl');
+  assert.equal(junk.anchors[0].href.indexOf('<'), -1);
+  assert.equal(junk.anchors[0].href.indexOf('script'), -1);
+  assert.equal(junk.anchors[1].href.indexOf('<'), -1);
+
+  var plain = runPage({ search: '', session: memoryStore(), local: memoryStore() });
+  assert.equal(tidOf(plain.links[0]), 'web');
+});
+
 test('a new ?src= does not replace the first touch already stored this tab', function () {
   var session = memoryStore();
   var local = memoryStore();

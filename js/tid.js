@@ -1,14 +1,19 @@
 /* ClickBank tid for the bridge-page HopLink.
    One tid per network (never the post code). Post codes stay in utm_content.
    Allowed outbound tids: pinterest, tiktok, youtube, facebook, instagram,
-   reddit, quora, web. Old links keep yts and bridge. teamtest stays for /s/teamtest.
+   reddit, quora, web, plus the exact bridge channel codes yt, pin, fb, email.
+   Old links keep yts and bridge. teamtest stays for /s/teamtest.
+   Exact ?src= tokens (trim + case only, never a prefix or a raw passthrough):
+     yt -> tid=yt, pin -> tid=pin, fb -> tid=fb, email -> tid=email.
+   A missing or unrecognized src does not invent a tid. Unknown sources stay web.
    /s/ codes (vercel.json), in addition to the existing yt/pn/ig/em/sr/si rules:
      tt[0-9]{6}[a-z]  tiktok
      fb[0-9]{6}[a-z]  facebook
      rd[0-9]{6}[a-z]  reddit
      qr[0-9]{6}[a-z]  quora
      qa[0-9]{6}[a-z]  quora (alias; qr is the primary code)
-   SEO (sr/si), email (em), direct, and unknown map to web.
+   SEO (sr/si), email post codes (em), direct, and unknown map to web.
+   ?src=email is the channel tid above. An em post code is not that tid.
    HopLink base (encrypted id, not the old affiliate=duyspace query form):
      https://72c658wr0hc2uu35weylo2xt65.hop.clickbank.net/?tid=<tid>
 */
@@ -31,11 +36,21 @@
   };
   var CODE = /^(pn|tt|yt|fb|ig|rd|qr|qa|em|sr|si)[0-9]{6}[a-z]$/;
   var SHORT = /^(pn|tt|yt|fb|ig|rd|qr|qa)$/;
+  /* Exact bridge ?src= values. Not derived from alnum(), so extra characters cannot match. */
+  var CHANNEL_SRC = { yt: 'yt', pin: 'pin', fb: 'fb', email: 'email' };
   var NETWORKS = {
     pinterest: 1, tiktok: 1, youtube: 1, facebook: 1,
     instagram: 1, reddit: 1, quora: 1, web: 1,
+    yt: 1, pin: 1, fb: 1, email: 1,
     yts: 1, bridge: 1, teamtest: 1
   };
+
+  function channelFromSrc(value) {
+    if (typeof value !== 'string') return '';
+    var key = value.trim().toLowerCase();
+    if (!Object.prototype.hasOwnProperty.call(CHANNEL_SRC, key)) return '';
+    return CHANNEL_SRC[key];
+  }
 
   function alnum(value) {
     return String(value == null ? '' : value).toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -60,6 +75,9 @@
     input = input || {};
     var explicit = alnum(input.tid);
     if (PRESERVE[explicit]) return explicit;
+
+    var channel = channelFromSrc(input.src);
+    if (channel) return channel;
 
     var source = alnum(input.utm_source || '');
     var fromSource = networkFromToken(source) || networkFromCode(source);
@@ -134,13 +152,26 @@
     if (teamMode || current === 'teamtest' || saved === 'teamtest') return 'teamtest';
     var signals = stored && typeof stored === 'object' && Object.keys(stored).length ? stored : query;
     var tid = deriveTid(signals);
-    if (!NETWORKS[tid] || !/^[a-z0-9]{1,24}$/.test(tid)) return 'web';
+    if (!allowedTid(tid)) return 'web';
     return tid;
   }
 
+  function allowedTid(tid) {
+    return typeof tid === 'string' && NETWORKS[tid] === 1 && /^[a-z0-9]{1,24}$/.test(tid);
+  }
+
   function hopUrl(tid) {
-    if (!/^[a-z0-9]{1,24}$/.test(tid)) tid = 'web';
+    if (!allowedTid(tid)) tid = 'web';
     return HOP_BASE + '?tid=' + tid;
+  }
+
+  /* Rewrite tid on an existing HopLink and keep every other query param. */
+  function withTid(href, tid, base) {
+    if (!allowedTid(tid)) tid = 'web';
+    var url = base ? new URL(href, base) : new URL(href);
+    if (url.hostname.indexOf('hop.clickbank.net') === -1) return String(href);
+    url.searchParams.set('tid', tid);
+    return url.toString();
   }
 
   function isTouch(value) {
@@ -213,6 +244,8 @@
     decorateInternalHref: decorateInternalHref,
     resolveOutboundTid: resolveOutboundTid,
     hopUrl: hopUrl,
+    withTid: withTid,
+    channelFromSrc: channelFromSrc,
     networkFromCode: networkFromCode
   };
 });
