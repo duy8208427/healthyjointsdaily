@@ -34,8 +34,8 @@ files.forEach(function (file) {
   var rel = path.relative(dist, file).split(path.sep).join('/');
   var hopPages = { 'index.html': 1, 'grocery/index.html': 1 };
   var allowsHop = !!hopPages[rel];
-  if (html.indexOf('/js/tid.js') === -1 || html.indexOf('/js/track.js') === -1) {
-    failures.push(rel + ': missing /js/tid.js or /js/track.js');
+  if (html.indexOf('/js/tid.js') === -1 || html.indexOf('/js/track.js') === -1 || html.indexOf('/js/clarity.js') === -1) {
+    failures.push(rel + ': missing /js/tid.js, /js/track.js, or /js/clarity.js');
   }
   var match;
   var hrefRe = /href\s*=\s*["']([^"']*clickbank\.net[^"']*)["']/gi;

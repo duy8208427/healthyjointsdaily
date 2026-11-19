@@ -13,6 +13,7 @@ var files = [
   'joint-genesis-ingredients/index.html',
   'js/tid.js',
   'js/track.js',
+  'js/clarity.js',
   'vercel.json'
 ];
 
