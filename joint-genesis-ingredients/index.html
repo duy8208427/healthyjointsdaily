@@ -322,7 +322,6 @@
     margin:16px 0 8px;
     color:var(--ink);
   }
-  .optin-form .opt{font-weight:400; color:var(--muted)}
   .optin-form input[type=text],.optin-form input[type=email]{
     width:100%;
     box-sizing:border-box;
@@ -688,8 +687,9 @@
     <h2 id="optin-title" class="optin-h">Free Joint-Friendly Guide</h2>
     <p class="optin-sub">Get our free 7 Morning Moves guide. Simple stretches for stiff joints, mostly seated, about 5 minutes.</p>
     <form class="optin-form" action="https://8d3f0c81.sibforms.com/serve/MUIFAHgUIumETzfFDZJv4TXhEeB7S-ANW-JgUIzc8VFPcdWqpQUbWQjdQQyg94lCiWJANpCmTf07_LF1lN_Y136PoD10cCH6NiOCwVqmc36CkFr9HuAelBVWiyUupNEAu-E2VsOysl9c9gSG376UyNdbT9FVLS4Mzv1QBPI4zqvT0GzbedBL3ogV27BlGLMDdClUB7kLMVbYArRbtA==" method="POST" target="brevo_frame" novalidate data-clarity-mask="true">
-      <label for="fn">First name <span class="opt">(optional)</span></label>
-      <input id="fn" type="text" name="FIRSTNAME" autocomplete="given-name" maxlength="60">
+      <label for="fn">First name</label>
+      <input id="fn" type="text" name="FIRSTNAME" autocomplete="given-name" maxlength="60" required aria-describedby="err-fn">
+      <p id="err-fn" class="optin-err" role="alert" hidden>Please enter your first name.</p>
       <label for="em">Email address</label>
       <input id="em" type="email" name="EMAIL" autocomplete="email" required inputmode="email" aria-describedby="err">
       <p id="err" class="optin-err" role="alert" hidden>Please enter a valid email address, like name@example.com.</p>
@@ -729,9 +729,16 @@
 <script>
 document.querySelectorAll('.optin-form').forEach(function(f){
   f.addEventListener('submit',function(e){
-    var em=f.querySelector('input[name=EMAIL]'),err=f.querySelector('.optin-err'),v=em.value.trim();
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){e.preventDefault();err.hidden=false;em.setAttribute('aria-invalid','true');em.focus();return;}
-    err.hidden=true;em.removeAttribute('aria-invalid');em.value=v;
+    var fn=f.querySelector('input[name=FIRSTNAME]'),em=f.querySelector('input[name=EMAIL]');
+    var fnErr=document.getElementById(fn.getAttribute('aria-describedby'));
+    var emErr=document.getElementById(em.getAttribute('aria-describedby'));
+    var name=fn.value.trim(),email=em.value.trim();
+    var badName=!name,badEmail=!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    fnErr.hidden=!badName;emErr.hidden=!badEmail;
+    if(badName)fn.setAttribute('aria-invalid','true');else fn.removeAttribute('aria-invalid');
+    if(badEmail)em.setAttribute('aria-invalid','true');else em.removeAttribute('aria-invalid');
+    if(badName||badEmail){e.preventDefault();(badName?fn:em).focus();return;}
+    fn.value=name;em.value=email;
     setTimeout(function(){document.querySelectorAll('.optin-form').forEach(function(x){x.hidden=true;x.nextElementSibling.hidden=false;});var ok=f.nextElementSibling;ok.focus();},300);
   });
 });
